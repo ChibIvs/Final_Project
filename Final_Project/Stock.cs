@@ -11,15 +11,6 @@ namespace Final_Project
 {
     public partial class Stock : Form
     {
-        class DBConnection
-        {
-            public static SqlConnection GetConnection()
-            {
-                return new SqlConnection(
-                @"Data Source=DESKTOP-EPQ1CDN\SQLEXPRESS;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Application Name=""SQL Server Management Studio"";Command Timeout=30");
-            }
-        }
-
         private void DisplayProduct()
         {
             using (SqlConnection con = DBConnection.GetConnection())
@@ -70,10 +61,22 @@ namespace Final_Project
         {
             try
             {
-                if (prosku.Text == "" || proname.Text == "" || prodesc.Text == "" ||
-                    procat.Text == "" || proquan.Text == "" || prounit.Text == "" || proprice.Text == "")
+                if (string.IsNullOrWhiteSpace(prosku.Text) ||
+                    string.IsNullOrWhiteSpace(proname.Text) ||
+                    string.IsNullOrWhiteSpace(prodesc.Text) ||
+                    string.IsNullOrWhiteSpace(procat.Text) ||
+                    string.IsNullOrWhiteSpace(proquan.Text) ||
+                    string.IsNullOrWhiteSpace(prounit.Text) ||
+                    string.IsNullOrWhiteSpace(proprice.Text))
                 {
                     MessageBox.Show("Missing INFORMATION");
+                    return;
+                }
+
+                if (!int.TryParse(proquan.Text, out int quantity) ||
+                    !decimal.TryParse(proprice.Text, out decimal price))
+                {
+                    MessageBox.Show("Invalid quantity or price!");
                     return;
                 }
 
@@ -81,19 +84,32 @@ namespace Final_Project
                 {
                     con.Open();
 
+                    // ✅ CHECK DUPLICATE SKU
+                    SqlCommand checkCmd = new SqlCommand(
+                        "SELECT COUNT(*) FROM Productss WHERE sku = @sku", con);
+                    checkCmd.Parameters.AddWithValue("@sku", prosku.Text);
+
+                    int exists = (int)checkCmd.ExecuteScalar();
+
+                    if (exists > 0)
+                    {
+                        MessageBox.Show("SKU already exists!");
+                        return;
+                    }
+
                     SqlCommand cmd = new SqlCommand(
                         @"INSERT INTO Productss 
-        (sku, product_name, product_description, prod_category, quantity, unit, price)
-        VALUES 
-        (@sk, @pn, @pdes, @pcat, @pquan, @punit, @pprice)", con);
+                (sku, product_name, product_Description, prod_category, quantity, unit, price)
+                VALUES 
+                (@sk, @pn, @pdes, @pcat, @pquan, @punit, @pprice)", con);
 
                     cmd.Parameters.AddWithValue("@sk", prosku.Text);
                     cmd.Parameters.AddWithValue("@pn", proname.Text);
                     cmd.Parameters.AddWithValue("@pdes", prodesc.Text);
                     cmd.Parameters.AddWithValue("@pcat", procat.Text);
-                    cmd.Parameters.AddWithValue("@pquan", proquan.Text);
+                    cmd.Parameters.AddWithValue("@pquan", quantity);
                     cmd.Parameters.AddWithValue("@punit", prounit.Text);
-                    cmd.Parameters.AddWithValue("@pprice", proprice.Text);
+                    cmd.Parameters.AddWithValue("@pprice", price);
 
                     cmd.ExecuteNonQuery();
 
@@ -134,10 +150,16 @@ namespace Final_Project
         {
             try
             {
-                if (prosku.Text == "" || proname.Text == "" || prodesc.Text == "" ||
-                    procat.Text == "" || proquan.Text == "" || prounit.Text == "" || proprice.Text == "")
+                if (string.IsNullOrWhiteSpace(proid.Text))
                 {
-                    MessageBox.Show("Missing INFORMATION");
+                    MessageBox.Show("Select a product first!");
+                    return;
+                }
+
+                if (!int.TryParse(proquan.Text, out int quantity) ||
+                    !decimal.TryParse(proprice.Text, out decimal price))
+                {
+                    MessageBox.Show("Invalid quantity or price!");
                     return;
                 }
 
@@ -147,22 +169,28 @@ namespace Final_Project
 
                     SqlCommand cmd = new SqlCommand(
                         @"UPDATE Productss SET 
-        sku = @sk, product_name = @pn, product_description = @pdes, prod_category = @pcat, quantity = @pquan, unit = @punit, price = @pprice
-        WHERE sku = @sk", con);
+                sku = @sk,
+                product_name = @pn,
+                product_Description = @pdes,
+                prod_category = @pcat,
+                quantity = @pquan,
+                unit = @punit,
+                price = @pprice
+                WHERE ProdID = @id", con);
 
+                    cmd.Parameters.AddWithValue("@id", proid.Text);
                     cmd.Parameters.AddWithValue("@sk", prosku.Text);
                     cmd.Parameters.AddWithValue("@pn", proname.Text);
                     cmd.Parameters.AddWithValue("@pdes", prodesc.Text);
                     cmd.Parameters.AddWithValue("@pcat", procat.Text);
-                    cmd.Parameters.AddWithValue("@pquan", proquan.Text);
+                    cmd.Parameters.AddWithValue("@pquan", quantity);
                     cmd.Parameters.AddWithValue("@punit", prounit.Text);
-                    cmd.Parameters.AddWithValue("@pprice", proprice.Text);
+                    cmd.Parameters.AddWithValue("@pprice", price);
 
                     cmd.ExecuteNonQuery();
-
-                    MessageBox.Show("Product updated successfully.");
                 }
 
+                MessageBox.Show("Product updated successfully.");
                 DisplayProduct();
             }
             catch (Exception ex)
@@ -177,13 +205,14 @@ namespace Final_Project
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-                prosku.Text = row.Cells["sku"].Value.ToString();
-                proname.Text = row.Cells["product_name"].Value.ToString();
-                prodesc.Text = row.Cells["product_description"].Value.ToString();
-                procat.Text = row.Cells["prod_category"].Value.ToString();
-                proquan.Text = row.Cells["quantity"].Value.ToString();
-                prounit.Text = row.Cells["unit"].Value.ToString();
-                proprice.Text = row.Cells["price"].Value.ToString();
+                proid.Text = row.Cells["ProdID"].Value?.ToString() ?? "";
+                prosku.Text = row.Cells["sku"].Value?.ToString() ?? "";
+                proname.Text = row.Cells["product_name"].Value?.ToString() ?? "";
+                prodesc.Text = row.Cells["product_Description"].Value?.ToString() ?? "";
+                procat.Text = row.Cells["prod_category"].Value?.ToString() ?? "";
+                proquan.Text = row.Cells["quantity"].Value?.ToString() ?? "";
+                prounit.Text = row.Cells["unit"].Value?.ToString() ?? "";
+                proprice.Text = row.Cells["price"].Value?.ToString() ?? "";
             }
         }
 
@@ -191,36 +220,34 @@ namespace Final_Project
         {
             try
             {
-                if (string.IsNullOrEmpty(prosku.Text))
+                if (string.IsNullOrEmpty(proid.Text))
                 {
-                    MessageBox.Show("Please select a product to delete.");
+                    MessageBox.Show("Select a product first.");
                     return;
                 }
 
                 DialogResult result = MessageBox.Show(
-                    "Are you sure you want to delete this product?",
-                    "Confirm Delete",
+                    "Delete this product?",
+                    "Confirm",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
 
-                if (result == DialogResult.Yes)
+                if (result == DialogResult.No)
+                    return;
+
+                using (SqlConnection con = DBConnection.GetConnection())
                 {
-                    using (SqlConnection con = DBConnection.GetConnection())
-                    {
-                        con.Open();
+                    con.Open();
 
-                        SqlCommand cmd = new SqlCommand(
-                            "DELETE FROM Productss WHERE sku = @sk", con);
+                    SqlCommand cmd = new SqlCommand(
+                        "DELETE FROM Productss WHERE ProdID = @id", con);
 
-                        cmd.Parameters.AddWithValue("@sk", prosku.Text);
-
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("Product deleted successfully!");
-
-                    DisplayProduct(); // refresh grid
+                    cmd.Parameters.AddWithValue("@id", proid.Text);
+                    cmd.ExecuteNonQuery();
                 }
+
+                MessageBox.Show("Deleted successfully!");
+                DisplayProduct();
             }
             catch (Exception ex)
             {

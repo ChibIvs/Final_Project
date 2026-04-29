@@ -66,11 +66,10 @@
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { P_ID, SKU, P_Name, Description, Category, Quantity, Unit, Price });
-            dataGridView1.Location = new Point(370, 1);
-            dataGridView1.Margin = new Padding(3, 4, 3, 4);
+            dataGridView1.Location = new Point(323, 3);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1050, 787);
+            dataGridView1.Size = new Size(919, 590);
             dataGridView1.TabIndex = 32;
             dataGridView1.CellClick += dataGridView1_CellClick_1;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
@@ -155,17 +154,17 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(proid);
             panel1.Controls.Add(label2);
-            panel1.Location = new Point(0, -13);
-            panel1.Margin = new Padding(3, 4, 3, 4);
+            panel1.Location = new Point(0, -10);
             panel1.Name = "panel1";
-            panel1.Size = new Size(374, 933);
+            panel1.Size = new Size(327, 700);
             panel1.TabIndex = 34;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(159, 496);
+            btnDelete.Location = new Point(139, 372);
+            btnDelete.Margin = new Padding(3, 2, 3, 2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(78, 28);
+            btnDelete.Size = new Size(68, 21);
             btnDelete.TabIndex = 41;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -173,9 +172,10 @@
             // 
             // Updatebtn
             // 
-            Updatebtn.Location = new Point(123, 462);
+            Updatebtn.Location = new Point(108, 346);
+            Updatebtn.Margin = new Padding(3, 2, 3, 2);
             Updatebtn.Name = "Updatebtn";
-            Updatebtn.Size = new Size(78, 28);
+            Updatebtn.Size = new Size(68, 21);
             Updatebtn.TabIndex = 40;
             Updatebtn.Text = "Update";
             Updatebtn.UseVisualStyleBackColor = true;
@@ -183,9 +183,10 @@
             // 
             // txtclear
             // 
-            txtclear.Location = new Point(240, 462);
+            txtclear.Location = new Point(210, 346);
+            txtclear.Margin = new Padding(3, 2, 3, 2);
             txtclear.Name = "txtclear";
-            txtclear.Size = new Size(78, 28);
+            txtclear.Size = new Size(68, 21);
             txtclear.TabIndex = 39;
             txtclear.Text = "Clear";
             txtclear.UseVisualStyleBackColor = true;
@@ -195,17 +196,18 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(14, 254);
+            label9.Location = new Point(12, 190);
             label9.Name = "label9";
-            label9.Size = new Size(89, 21);
+            label9.Size = new Size(68, 16);
             label9.TabIndex = 38;
             label9.Text = "Category";
             // 
             // button1
             // 
-            button1.Location = new Point(24, 462);
+            button1.Location = new Point(21, 346);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(78, 28);
+            button1.Size = new Size(68, 21);
             button1.TabIndex = 37;
             button1.Text = "Insert";
             button1.UseVisualStyleBackColor = true;
@@ -215,53 +217,51 @@
             // 
             procat.FormattingEnabled = true;
             procat.Items.AddRange(new object[] { "Frozen Food,", " Beverages", "Personal Care", "Household Supplies" });
-            procat.Location = new Point(175, 247);
+            procat.Location = new Point(153, 185);
+            procat.Margin = new Padding(3, 2, 3, 2);
             procat.Name = "procat";
-            procat.Size = new Size(177, 28);
+            procat.Size = new Size(155, 23);
             procat.TabIndex = 36;
             // 
             // proprice
             // 
-            proprice.Location = new Point(175, 409);
-            proprice.Margin = new Padding(3, 4, 3, 4);
+            proprice.Location = new Point(153, 307);
             proprice.Name = "proprice";
-            proprice.Size = new Size(177, 27);
+            proprice.Size = new Size(155, 23);
             proprice.TabIndex = 34;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(14, 412);
+            label7.Location = new Point(12, 309);
             label7.Name = "label7";
-            label7.Size = new Size(71, 21);
+            label7.Size = new Size(52, 16);
             label7.TabIndex = 33;
             label7.Text = "PRICE";
             // 
             // prounit
             // 
-            prounit.Location = new Point(175, 355);
-            prounit.Margin = new Padding(3, 4, 3, 4);
+            prounit.Location = new Point(153, 266);
             prounit.Name = "prounit";
-            prounit.Size = new Size(177, 27);
+            prounit.Size = new Size(155, 23);
             prounit.TabIndex = 32;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(14, 358);
+            label6.Location = new Point(12, 268);
             label6.Name = "label6";
-            label6.Size = new Size(58, 21);
+            label6.Size = new Size(43, 16);
             label6.TabIndex = 31;
             label6.Text = "UNIT";
             // 
             // proquan
             // 
-            proquan.Location = new Point(175, 296);
-            proquan.Margin = new Padding(3, 4, 3, 4);
+            proquan.Location = new Point(153, 222);
             proquan.Name = "proquan";
-            proquan.Size = new Size(177, 27);
+            proquan.Size = new Size(155, 23);
             proquan.TabIndex = 30;
             proquan.TextChanged += proquan_TextChanged;
             // 
@@ -269,18 +269,17 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(14, 299);
+            label5.Location = new Point(12, 224);
             label5.Name = "label5";
-            label5.Size = new Size(88, 21);
+            label5.Size = new Size(69, 16);
             label5.TabIndex = 29;
             label5.Text = "Quantity";
             // 
             // prodesc
             // 
-            prodesc.Location = new Point(175, 200);
-            prodesc.Margin = new Padding(3, 4, 3, 4);
+            prodesc.Location = new Point(153, 150);
             prodesc.Name = "prodesc";
-            prodesc.Size = new Size(177, 27);
+            prodesc.Size = new Size(155, 23);
             prodesc.TabIndex = 28;
             prodesc.TextChanged += Desc_TextChanged;
             // 
@@ -288,18 +287,17 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(14, 203);
+            label4.Location = new Point(12, 152);
             label4.Name = "label4";
-            label4.Size = new Size(144, 21);
+            label4.Size = new Size(108, 16);
             label4.TabIndex = 27;
             label4.Text = "DESCRIPTION";
             // 
             // proname
             // 
-            proname.Location = new Point(175, 116);
-            proname.Margin = new Padding(3, 4, 3, 4);
+            proname.Location = new Point(153, 87);
             proname.Name = "proname";
-            proname.Size = new Size(177, 27);
+            proname.Size = new Size(155, 23);
             proname.TabIndex = 26;
             proname.TextChanged += proname_TextChanged;
             // 
@@ -307,56 +305,53 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(14, 119);
+            label3.Location = new Point(12, 89);
             label3.Name = "label3";
-            label3.Size = new Size(166, 21);
+            label3.Size = new Size(127, 16);
             label3.TabIndex = 25;
             label3.Text = "PRODUCT NAME";
             // 
             // prosku
             // 
-            prosku.Location = new Point(175, 64);
-            prosku.Margin = new Padding(3, 4, 3, 4);
+            prosku.Location = new Point(153, 48);
             prosku.Name = "prosku";
-            prosku.Size = new Size(177, 27);
+            prosku.Size = new Size(155, 23);
             prosku.TabIndex = 24;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(14, 67);
+            label1.Location = new Point(12, 50);
             label1.Name = "label1";
-            label1.Size = new Size(49, 21);
+            label1.Size = new Size(38, 16);
             label1.TabIndex = 23;
             label1.Text = "SKU";
             // 
             // proid
             // 
-            proid.Location = new Point(175, 29);
-            proid.Margin = new Padding(3, 4, 3, 4);
+            proid.Location = new Point(153, 22);
             proid.Name = "proid";
-            proid.Size = new Size(177, 27);
+            proid.Size = new Size(155, 23);
             proid.TabIndex = 22;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(14, 32);
+            label2.Location = new Point(12, 24);
             label2.Name = "label2";
-            label2.Size = new Size(131, 21);
+            label2.Size = new Size(100, 16);
             label2.TabIndex = 21;
             label2.Text = "PRODUCT ID";
             // 
             // Stock
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1622, 893);
+            ClientSize = new Size(1419, 670);
             Controls.Add(panel1);
             Controls.Add(dataGridView1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Stock";
             Text = "Stock";
             Load += Stock_Load;

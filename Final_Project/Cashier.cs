@@ -4,6 +4,7 @@ namespace Final_Project
 {
     public partial class Form1 : Form
     {
+        private Transaction transactionForm;
         public Form1()
         {
             InitializeComponent();
@@ -29,7 +30,6 @@ namespace Final_Project
                         string unit = reader["unit"].ToString();
                         int stockQty = Convert.ToInt32(reader["quantity"]);
 
-                        // 🔥 CHECK STOCK HERE (NOW reader EXISTS)
                         if (stockQty <= 0)
                         {
                             MessageBox.Show("Out of stock!");
@@ -39,7 +39,6 @@ namespace Final_Project
                         int qty = 1;
                         decimal amount = qty * price;
 
-                        // 🔥 ADD SKU ALSO (important!)
                         dataGridView1.Rows.Add(sku, name, qty, unit, price, amount);
 
                         UpdateSubtotal();
@@ -51,11 +50,6 @@ namespace Final_Project
                 }
             }
         }
-
-
-
-
-
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -83,8 +77,6 @@ namespace Final_Project
             // hide SKU
             dataGridView1.Columns[0].Visible = false;
         }
-
-
 
         private void btnNum0_Click(object sender, EventArgs e)
         {
@@ -142,8 +134,6 @@ namespace Final_Project
             txtSku.Text = clear;
         }
 
-
-
         private void txt_TextChanged(object sender, EventArgs e)
         {
 
@@ -163,9 +153,6 @@ namespace Final_Project
         {
 
         }
-
-
-
 
         private void txtsku_KeyDown(object sender, KeyEventArgs e)
         {
@@ -191,7 +178,6 @@ namespace Final_Project
             txtSku.Clear();
             txtSku.Focus();
         }
-        // 1. Detect change
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -203,7 +189,6 @@ namespace Final_Project
             }
         }
 
-        // 2. Force commit
         private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             if (dataGridView1.IsCurrentCellDirty)
@@ -212,7 +197,6 @@ namespace Final_Project
             }
         }
 
-        // 3. Live typing update
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             if (dataGridView1.CurrentCell.ColumnIndex == 2)
@@ -226,7 +210,6 @@ namespace Final_Project
             }
         }
 
-        // 4. While typing
         private void Qty_TextChanged(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentCell == null) return;
@@ -269,7 +252,6 @@ namespace Final_Project
                     stockQty = Convert.ToInt32(result);
             }
 
-            // check stock
             if (qty > stockQty)
             {
                 MessageBox.Show("Not enough stock!");
@@ -278,11 +260,8 @@ namespace Final_Project
                 qty = stockQty;
             }
 
-            // amount
             row.Cells[5].Value = qty * price;
         }
-
-
 
         private void UpdateSubtotal()
         {
@@ -290,7 +269,7 @@ namespace Final_Project
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                if (row.Cells[5].Value != null) // AMOUNT
+                if (row.Cells[5].Value != null)
                 {
                     subtotal += Convert.ToDecimal(row.Cells[5].Value);
                 }
@@ -298,7 +277,6 @@ namespace Final_Project
 
             txtSubTotal.Text = subtotal.ToString("0.00");
         }
-
 
         private void btnPay_Click(object sender, EventArgs e)
         {
@@ -341,31 +319,71 @@ namespace Final_Project
                 return;
 
             // =========================
-            // 3. STOCK DEDUCTION
+            // 3. STOCK DEDUCTION & SAVE TO DATABASE
             // =========================
             using (SqlConnection con = DBConnection.GetConnection())
             {
                 con.Open();
 
+                // Create Transaction
+                SqlCommand transCmd = new SqlCommand(
+                    "INSERT INTO Transactions (TransactionDate, TotalAmount) VALUES (@date, @total); SELECT SCOPE_IDENTITY();", con);
+
+                transCmd.Parameters.AddWithValue("@date", DateTime.Now);
+                transCmd.Parameters.AddWithValue("@total", subtotal);
+
+                int transactionID = Convert.ToInt32(transCmd.ExecuteScalar());
+
+                // Save Sales and Deduct Stock
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
                     if (row.IsNewRow) continue;
 
                     string sku = row.Cells[0].Value.ToString();
+                    string productName = row.Cells[1].Value.ToString();
                     int qty = Convert.ToInt32(row.Cells[2].Value);
+                    decimal price = Convert.ToDecimal(row.Cells[4].Value);
+                    decimal amount = Convert.ToDecimal(row.Cells[5].Value);
 
-                    SqlCommand cmd = new SqlCommand(
+                    // Get ItemID from Productss table using SKU
+                    SqlCommand getItemCmd = new SqlCommand(
+                           "SELECT ProdID FROM Productss WHERE sku = @sku", con);
+                    getItemCmd.Parameters.AddWithValue("@sku", sku);
+                    object itemIdObj = getItemCmd.ExecuteScalar();
+
+                    if (itemIdObj == null)
+                    {
+                        MessageBox.Show("Product not found: " + sku);
+                        return;
+                    }
+
+                    int itemID = Convert.ToInt32(itemIdObj);
+
+                    // Insert into Sales table
+                    SqlCommand saleCmd = new SqlCommand(
+                        "INSERT INTO Sales (ItemID, Quantity, UnitPrice, Amount, TransactionID) VALUES (@itemID, @qty, @price, @amount, @transID)", con);
+
+                    saleCmd.Parameters.AddWithValue("@itemID", itemID);
+                    saleCmd.Parameters.AddWithValue("@qty", qty);
+                    saleCmd.Parameters.AddWithValue("@price", price);
+                    saleCmd.Parameters.AddWithValue("@amount", amount);
+                    saleCmd.Parameters.AddWithValue("@transID", transactionID);
+
+                    saleCmd.ExecuteNonQuery();
+
+                    // Deduct stock
+                    SqlCommand stockCmd = new SqlCommand(
                         "UPDATE Productss SET quantity = quantity - @qty WHERE sku = @sku AND quantity >= @qty", con);
 
-                    cmd.Parameters.AddWithValue("@qty", qty);
-                    cmd.Parameters.AddWithValue("@sku", sku);
+                    stockCmd.Parameters.AddWithValue("@qty", qty);
+                    stockCmd.Parameters.AddWithValue("@sku", sku);
 
-                    int result = cmd.ExecuteNonQuery();
+                    int result = stockCmd.ExecuteNonQuery();
 
                     if (result == 0)
                     {
                         MessageBox.Show("Not enough stock for SKU: " + sku);
-                        return; // stop everything if stock fails
+                        return;
                     }
                 }
             }
@@ -385,10 +403,14 @@ namespace Final_Project
             UpdateSubtotal();
             txtSku.Clear();
             paym.Clear();
+            txtChange.Clear();
+
+            // Refresh Transaction form automatically
+            if (transactionForm != null && !transactionForm.IsDisposed)
+            {
+                transactionForm.RefreshData();
+            }
         }
-
-
-
 
         private void btnVoid_Click_1(object sender, EventArgs e)
         {
@@ -405,10 +427,10 @@ namespace Final_Project
                     dataGridView1.Rows.Remove(row);
                 }
                 DialogResult result = MessageBox.Show(
-    "Void selected item?",
-    "Confirm",
-    MessageBoxButtons.YesNo,
-    MessageBoxIcon.Warning);
+                    "Void selected item?",
+                    "Confirm",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
 
                 if (result == DialogResult.No)
                     return;
@@ -424,8 +446,15 @@ namespace Final_Project
 
         private void btnTransactions_Click(object sender, EventArgs e)
         {
-            Transaction transaction = new Transaction();
-            transaction.ShowDialog();
+            if (transactionForm == null || transactionForm.IsDisposed)
+            {
+                transactionForm = new Transaction();
+            }
+
+            transactionForm.Show();
+            transactionForm.BringToFront();
         }
+
+
     }
 }

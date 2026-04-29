@@ -32,16 +32,6 @@
             Transact = new Label();
             Sales = new Label();
             dataGridView3 = new DataGridView();
-            Trasaction_ID = new DataGridViewTextBoxColumn();
-            Date = new DataGridViewTextBoxColumn();
-            Total_Amount = new DataGridViewTextBoxColumn();
-            Sale_ID = new DataGridViewTextBoxColumn();
-            Item_ID = new DataGridViewTextBoxColumn();
-            Quantity = new DataGridViewTextBoxColumn();
-            Unit = new DataGridViewTextBoxColumn();
-            Price = new DataGridViewTextBoxColumn();
-            Amount = new DataGridViewTextBoxColumn();
-            Transaction_ID = new DataGridViewTextBoxColumn();
             btnVoid = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
@@ -50,7 +40,6 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Trasaction_ID, Date, Total_Amount });
             dataGridView1.Location = new Point(12, 306);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(363, 247);
@@ -80,69 +69,16 @@
             // dataGridView3
             // 
             dataGridView3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView3.Columns.AddRange(new DataGridViewColumn[] { Sale_ID, Item_ID, Quantity, Unit, Price, Amount, Transaction_ID });
             dataGridView3.Location = new Point(12, 34);
             dataGridView3.Name = "dataGridView3";
-            dataGridView3.Size = new Size(743, 247);
+            dataGridView3.Size = new Size(644, 247);
             dataGridView3.TabIndex = 26;
             dataGridView3.CellContentClick += dataGridView3_CellContentClick;
-            // 
-            // Trasaction_ID
-            // 
-            Trasaction_ID.HeaderText = "Trasaction ID";
-            Trasaction_ID.Name = "Trasaction_ID";
-            // 
-            // Date
-            // 
-            Date.HeaderText = "Date";
-            Date.Name = "Date";
-            // 
-            // Total_Amount
-            // 
-            Total_Amount.HeaderText = "Total Amount";
-            Total_Amount.MaxInputLength = 3276722;
-            Total_Amount.Name = "Total_Amount";
-            Total_Amount.Width = 120;
-            // 
-            // Sale_ID
-            // 
-            Sale_ID.HeaderText = "Sale ID";
-            Sale_ID.Name = "Sale_ID";
-            // 
-            // Item_ID
-            // 
-            Item_ID.HeaderText = "Item ID";
-            Item_ID.Name = "Item_ID";
-            // 
-            // Quantity
-            // 
-            Quantity.HeaderText = "Quantity";
-            Quantity.Name = "Quantity";
-            // 
-            // Unit
-            // 
-            Unit.HeaderText = "Unit";
-            Unit.Name = "Unit";
-            // 
-            // Price
-            // 
-            Price.HeaderText = "Price";
-            Price.Name = "Price";
-            // 
-            // Amount
-            // 
-            Amount.HeaderText = "Amount";
-            Amount.Name = "Amount";
-            // 
-            // Transaction_ID
-            // 
-            Transaction_ID.HeaderText = "Transaction ID";
-            Transaction_ID.Name = "Transaction_ID";
             // 
             // btnVoid
             // 
             btnVoid.Font = new Font("Century Schoolbook", 9F, FontStyle.Bold);
-            btnVoid.Location = new Point(627, 296);
+            btnVoid.Location = new Point(528, 287);
             btnVoid.Name = "btnVoid";
             btnVoid.Size = new Size(128, 53);
             btnVoid.TabIndex = 27;
@@ -154,7 +90,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(774, 565);
+            ClientSize = new Size(665, 565);
             Controls.Add(btnVoid);
             Controls.Add(dataGridView3);
             Controls.Add(Sales);
@@ -175,16 +111,6 @@
         private Label Transact;
         private Label Sales;
         private DataGridView dataGridView3;
-        private DataGridViewTextBoxColumn Trasaction_ID;
-        private DataGridViewTextBoxColumn Date;
-        private DataGridViewTextBoxColumn Total_Amount;
-        private DataGridViewTextBoxColumn Sale_ID;
-        private DataGridViewTextBoxColumn Item_ID;
-        private DataGridViewTextBoxColumn Quantity;
-        private DataGridViewTextBoxColumn Unit;
-        private DataGridViewTextBoxColumn Price;
-        private DataGridViewTextBoxColumn Amount;
-        private DataGridViewTextBoxColumn Transaction_ID;
         private Button btnVoid;
     }
 }

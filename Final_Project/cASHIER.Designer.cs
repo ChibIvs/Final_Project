@@ -70,7 +70,7 @@
             // btnNum7
             // 
             btnNum7.Font = new Font("Century Schoolbook", 9F);
-            btnNum7.Location = new Point(837, 147);
+            btnNum7.Location = new Point(707, 147);
             btnNum7.Name = "btnNum7";
             btnNum7.Size = new Size(56, 40);
             btnNum7.TabIndex = 0;
@@ -81,7 +81,7 @@
             // btnNum8
             // 
             btnNum8.Font = new Font("Century Schoolbook", 9F);
-            btnNum8.Location = new Point(899, 147);
+            btnNum8.Location = new Point(769, 147);
             btnNum8.Name = "btnNum8";
             btnNum8.Size = new Size(56, 40);
             btnNum8.TabIndex = 1;
@@ -92,7 +92,7 @@
             // btnNum9
             // 
             btnNum9.Font = new Font("Century Schoolbook", 9F);
-            btnNum9.Location = new Point(962, 147);
+            btnNum9.Location = new Point(832, 147);
             btnNum9.Name = "btnNum9";
             btnNum9.Size = new Size(56, 40);
             btnNum9.TabIndex = 2;
@@ -103,7 +103,7 @@
             // btnNum4
             // 
             btnNum4.Font = new Font("Century Schoolbook", 9F);
-            btnNum4.Location = new Point(837, 193);
+            btnNum4.Location = new Point(707, 193);
             btnNum4.Name = "btnNum4";
             btnNum4.Size = new Size(56, 40);
             btnNum4.TabIndex = 3;
@@ -114,7 +114,7 @@
             // btnNum5
             // 
             btnNum5.Font = new Font("Century Schoolbook", 9F);
-            btnNum5.Location = new Point(899, 193);
+            btnNum5.Location = new Point(769, 193);
             btnNum5.Name = "btnNum5";
             btnNum5.Size = new Size(56, 40);
             btnNum5.TabIndex = 4;
@@ -125,7 +125,7 @@
             // btnNum6
             // 
             btnNum6.Font = new Font("Century Schoolbook", 9F);
-            btnNum6.Location = new Point(962, 193);
+            btnNum6.Location = new Point(832, 193);
             btnNum6.Name = "btnNum6";
             btnNum6.Size = new Size(56, 40);
             btnNum6.TabIndex = 5;
@@ -136,7 +136,7 @@
             // btnNum1
             // 
             btnNum1.Font = new Font("Century Schoolbook", 9F);
-            btnNum1.Location = new Point(837, 239);
+            btnNum1.Location = new Point(707, 239);
             btnNum1.Name = "btnNum1";
             btnNum1.Size = new Size(56, 40);
             btnNum1.TabIndex = 6;
@@ -147,7 +147,7 @@
             // btnNum2
             // 
             btnNum2.Font = new Font("Century Schoolbook", 9F);
-            btnNum2.Location = new Point(899, 239);
+            btnNum2.Location = new Point(769, 239);
             btnNum2.Name = "btnNum2";
             btnNum2.Size = new Size(56, 40);
             btnNum2.TabIndex = 7;
@@ -158,7 +158,7 @@
             // btnNum3
             // 
             btnNum3.Font = new Font("Century Schoolbook", 9F);
-            btnNum3.Location = new Point(962, 239);
+            btnNum3.Location = new Point(832, 239);
             btnNum3.Name = "btnNum3";
             btnNum3.Size = new Size(56, 40);
             btnNum3.TabIndex = 8;
@@ -169,7 +169,7 @@
             // btnPeriod
             // 
             btnPeriod.Font = new Font("Century Schoolbook", 9F);
-            btnPeriod.Location = new Point(962, 285);
+            btnPeriod.Location = new Point(832, 285);
             btnPeriod.Name = "btnPeriod";
             btnPeriod.Size = new Size(56, 40);
             btnPeriod.TabIndex = 9;
@@ -180,7 +180,7 @@
             // btnNum0
             // 
             btnNum0.Font = new Font("Century Schoolbook", 9F);
-            btnNum0.Location = new Point(837, 285);
+            btnNum0.Location = new Point(707, 285);
             btnNum0.Name = "btnNum0";
             btnNum0.Size = new Size(118, 40);
             btnNum0.TabIndex = 10;
@@ -191,7 +191,7 @@
             // btnClear
             // 
             btnClear.Font = new Font("Century Schoolbook", 9F);
-            btnClear.Location = new Point(1024, 147);
+            btnClear.Location = new Point(894, 147);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(56, 40);
             btnClear.TabIndex = 11;
@@ -202,7 +202,7 @@
             // btnEnter
             // 
             btnEnter.Font = new Font("Century Schoolbook", 9F);
-            btnEnter.Location = new Point(1024, 193);
+            btnEnter.Location = new Point(894, 193);
             btnEnter.Name = "btnEnter";
             btnEnter.Size = new Size(56, 86);
             btnEnter.TabIndex = 12;
@@ -213,7 +213,7 @@
             // btnVoid
             // 
             btnVoid.Font = new Font("Century Schoolbook", 9F, FontStyle.Bold);
-            btnVoid.Location = new Point(685, 480);
+            btnVoid.Location = new Point(562, 480);
             btnVoid.Name = "btnVoid";
             btnVoid.Size = new Size(128, 53);
             btnVoid.TabIndex = 13;
@@ -224,7 +224,7 @@
             // txtSku
             // 
             txtSku.Font = new Font("Century Schoolbook", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtSku.Location = new Point(836, 65);
+            txtSku.Location = new Point(706, 65);
             txtSku.Multiline = true;
             txtSku.Name = "txtSku";
             txtSku.Size = new Size(242, 77);
@@ -236,7 +236,7 @@
             // txtSubTotal
             // 
             txtSubTotal.Font = new Font("Century Schoolbook", 9F);
-            txtSubTotal.Location = new Point(962, 346);
+            txtSubTotal.Location = new Point(832, 346);
             txtSubTotal.Name = "txtSubTotal";
             txtSubTotal.Size = new Size(118, 22);
             txtSubTotal.TabIndex = 15;
@@ -255,7 +255,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(837, 347);
+            label2.Location = new Point(707, 347);
             label2.Name = "label2";
             label2.Size = new Size(55, 16);
             label2.TabIndex = 20;
@@ -274,7 +274,7 @@
             // btnStocks
             // 
             btnStocks.Font = new Font("Century Schoolbook", 9F, FontStyle.Bold);
-            btnStocks.Location = new Point(417, 479);
+            btnStocks.Location = new Point(294, 479);
             btnStocks.Name = "btnStocks";
             btnStocks.Size = new Size(128, 54);
             btnStocks.TabIndex = 29;
@@ -285,7 +285,7 @@
             // btnPay
             // 
             btnPay.Font = new Font("Century Schoolbook", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPay.Location = new Point(836, 480);
+            btnPay.Location = new Point(706, 480);
             btnPay.Name = "btnPay";
             btnPay.Size = new Size(244, 53);
             btnPay.TabIndex = 30;
@@ -301,7 +301,7 @@
             dataGridView1.Location = new Point(10, 64);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(803, 409);
+            dataGridView1.Size = new Size(680, 409);
             dataGridView1.TabIndex = 31;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
@@ -353,7 +353,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(837, 448);
+            label4.Location = new Point(707, 448);
             label4.Name = "label4";
             label4.Size = new Size(69, 16);
             label4.TabIndex = 33;
@@ -362,7 +362,7 @@
             // txtChange
             // 
             txtChange.Font = new Font("Century Schoolbook", 9F);
-            txtChange.Location = new Point(962, 446);
+            txtChange.Location = new Point(832, 446);
             txtChange.Name = "txtChange";
             txtChange.Size = new Size(118, 22);
             txtChange.TabIndex = 32;
@@ -377,7 +377,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Century Schoolbook", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(837, 381);
+            label6.Location = new Point(707, 381);
             label6.Name = "label6";
             label6.Size = new Size(78, 16);
             label6.TabIndex = 35;
@@ -386,7 +386,7 @@
             // paym
             // 
             paym.Font = new Font("Century Schoolbook", 9F);
-            paym.Location = new Point(962, 380);
+            paym.Location = new Point(832, 380);
             paym.Name = "paym";
             paym.Size = new Size(118, 22);
             paym.TabIndex = 34;
@@ -395,7 +395,7 @@
             // btnTransactions
             // 
             btnTransactions.Font = new Font("Century Schoolbook", 9F, FontStyle.Bold);
-            btnTransactions.Location = new Point(551, 479);
+            btnTransactions.Location = new Point(428, 479);
             btnTransactions.Name = "btnTransactions";
             btnTransactions.Size = new Size(128, 54);
             btnTransactions.TabIndex = 36;
@@ -405,7 +405,7 @@
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Location = new Point(572, 23);
+            dateTimePicker1.Location = new Point(449, 23);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(241, 23);
             dateTimePicker1.TabIndex = 37;
@@ -414,7 +414,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1099, 541);
+            ClientSize = new Size(962, 541);
             Controls.Add(dateTimePicker1);
             Controls.Add(btnTransactions);
             Controls.Add(label6);
