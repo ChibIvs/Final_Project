@@ -1,0 +1,64 @@
+CREATE DATABASE InventoryDB;
+
+DROP TABLE IF EXISTS Products;
+
+
+CREATE TABLE Productss (
+    ProdID INT IDENTITY PRIMARY KEY,
+    sku NVARCHAR(50),
+    product_name NVARCHAR(100),
+    product_Description NVARCHAR(255),
+    prod_category NVARCHAR(100),
+    quantity INT,
+    unit NVARCHAR(50),
+    price DECIMAL(10,2)
+);
+
+SELECT * FROM Productss
+
+
+
+CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY IDENTITY(1,1),
+    TransactionDate DATETIME DEFAULT GETDATE(),
+    TotalAmount DECIMAL(10, 2) NOT NULL
+);
+
+SELECT * FROM Transactions
+DELETE FROM Transactions;
+
+
+CREATE TABLE Sales (
+    SaleID INT PRIMARY KEY IDENTITY(1,1),
+    sku NVARCHAR(50) NOT NULL,
+    Quantity INT NOT NULL,
+    Price DECIMAL(10,2) NOT NULL,
+    Unit NVARCHAR(50),
+    Amount DECIMAL(10,2) NOT NULL,
+    TransactionID INT NOT NULL,
+    FOREIGN KEY (TransactionID) REFERENCES Transactions(TransactionID) ON DELETE CASCADE
+);
+
+
+
+SELECT * FROM Sales
+
+SELECT COLUMN_NAME 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Sales';
+
+SELECT COLUMN_NAME, ORDINAL_POSITION
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Sales';
+
+ALTER TABLE Sales ADD SKU NVARCHAR(50);
+
+DROP TABLE IF EXISTS Sales;
+
+DELETE FROM Sales;
+
+TRUNCATE TABLE Transactions;
+
+SELECT * FROM Productss
+SELECT * FROM Sales
+SELECT * FROM Transactions

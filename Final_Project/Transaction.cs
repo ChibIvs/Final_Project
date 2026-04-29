@@ -15,6 +15,7 @@ namespace Final_Project
         {
             LoadTransactionData();
             LoadSalesData();
+            LoadSummaryData();
         }
         public Transaction()
         {
@@ -25,6 +26,7 @@ namespace Final_Project
         {
             LoadTransactionData();
             LoadSalesData();
+            LoadSummaryData();
         }
 
         private void LoadTransactionData()
@@ -47,11 +49,17 @@ namespace Final_Project
             {
                 con.Open();
                 string query = @"
-                    SELECT s.SaleID, p.product_name, s.Quantity, s.UnitPrice, s.Amount, s.TransactionID
-                    FROM Sales s
-                    INNER JOIN Productss p ON s.ItemID = p.ProdID
-                    ORDER BY s.TransactionID DESC";
-                
+    SELECT 
+        s.SaleID, 
+        s.Quantity, 
+        s.Price, 
+        s.Unit, 
+        s.Amount, 
+        s.TransactionID
+    FROM Sales s
+    ORDER BY s.TransactionID DESC";
+
+
                 SqlDataAdapter da = new SqlDataAdapter(query, con);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -60,12 +68,40 @@ namespace Final_Project
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellCoClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0) return;
+
+            int transactionID = Convert.ToInt32(
+                dataGridView1.Rows[e.RowIndex].Cells["TransactionID"].Value);
+
+            LoadSalesByTransaction(transactionID);
+        }
+
+        private void LoadSalesByTransaction(int transactionID)
+        {
+            using (SqlConnection con = DBConnection.GetConnection())
             {
-                int transactionID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["TransactionID"].Value);
-                FilterSalesByTransaction(transactionID);
+                con.Open();
+
+                string query = @"
+            SELECT 
+                SaleID,
+                Quantity,
+                Price,
+                Unit,
+                Amount,
+                TransactionID
+            FROM Sales
+            WHERE TransactionID = @id";
+
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.SelectCommand.Parameters.AddWithValue("@id", transactionID);
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                dataGridView3.DataSource = dt;
             }
         }
 
@@ -75,11 +111,17 @@ namespace Final_Project
             {
                 con.Open();
                 string query = @"
-                    SELECT s.SaleID, s.ItemID, p.product_name, s.Quantity, s.UnitPrice, s.Amount, s.TransactionID
-                    FROM Sales s
-                    INNER JOIN Productss p ON s.ItemID = p.id
-                    WHERE s.TransactionID = @transID";
-                
+    SELECT 
+        s.SaleID, 
+        s.Quantity, 
+        s.Price, 
+        s.Unit, 
+        s.Amount, 
+        s.TransactionID
+    FROM Sales s
+    WHERE s.TransactionID = @transID";
+
+
                 SqlDataAdapter da = new SqlDataAdapter(query, con);
                 da.SelectCommand.Parameters.AddWithValue("@transID", transactionID);
                 DataTable dt = new DataTable();
@@ -117,29 +159,40 @@ namespace Final_Project
                 {
                     // ✅ RESTORE STOCK
                     SqlCommand restoreCmd = new SqlCommand(@"
-            UPDATE p
-            SET p.quantity = p.quantity + s.Quantity
-            FROM Productss p
-            INNER JOIN Sales s ON p.ProdID = s.ItemID
-            WHERE s.TransactionID = @id", con, trans);
+UPDATE p
+SET p.quantity = p.quantity + s.Quantity
+FROM Productss p
+JOIN Sales s ON p.sku = s.SKU
+WHERE s.TransactionID = @id", con, trans);
 
                     restoreCmd.Parameters.AddWithValue("@id", transactionID);
-                    restoreCmd.ExecuteNonQuery();
+
+                    int affected = restoreCmd.ExecuteNonQuery();
+                    if (affected == 0)
+                    {
+                        MessageBox.Show("No stock restored (check SKU match!)");
+                    }
+
 
                     // Delete sales
                     SqlCommand deleteSales = new SqlCommand(
-                        "DELETE FROM Sales WHERE TransactionID = @id", con, trans);
+    "DELETE FROM Sales WHERE TransactionID = @id", con, trans);
+
                     deleteSales.Parameters.AddWithValue("@id", transactionID);
                     deleteSales.ExecuteNonQuery();
 
                     // Delete transaction
                     SqlCommand deleteTrans = new SqlCommand(
-                        "DELETE FROM Transactions WHERE TransactionID = @id", con, trans);
+    "DELETE FROM Transactions WHERE TransactionID = @id", con, trans);
+
                     deleteTrans.Parameters.AddWithValue("@id", transactionID);
                     deleteTrans.ExecuteNonQuery();
 
                     trans.Commit();
-                    MessageBox.Show("Transaction voided!");
+                    MessageBox.Show("Transaction voided + stock restored!");
+
+                    RefreshData();
+
                 }
                 catch (Exception ex)
                 {
@@ -149,10 +202,62 @@ namespace Final_Project
             }
         }
 
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            int transactionID = Convert.ToInt32(
+                dataGridView1.Rows[e.RowIndex].Cells["TransactionID"].Value);
+
+            LoadSalesByTransaction(transactionID);
+        }
+        private void LoadSummaryData()
+        {
+            using (SqlConnection con = DBConnection.GetConnection())
+            {
+                con.Open();
+
+                // 🔹 TOTAL SALES
+                SqlCommand totalSalesCmd = new SqlCommand(
+                    "SELECT ISNULL(SUM(TotalAmount), 0) FROM Transactions", con);
+
+                decimal totalSales = Convert.ToDecimal(totalSalesCmd.ExecuteScalar());
+
+                // 🔹 TOTAL TRANSACTIONS
+                SqlCommand totalTransCmd = new SqlCommand(
+                    "SELECT COUNT(*) FROM Transactions", con);
+
+                int totalTransactions = Convert.ToInt32(totalTransCmd.ExecuteScalar());
+
+                // 🔹 DISPLAY TO TEXTBOXES
+                txtsales.Text = totalSales.ToString("0.00");
+                txttransactions.Text = totalTransactions.ToString();
+            }
+        }
+
+        private void Sales_Click(object sender, EventArgs e)
         {
 
         }
 
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtsales_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txttransactions_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txttodaysale_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

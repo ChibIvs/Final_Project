@@ -342,6 +342,7 @@ namespace Final_Project
                     string sku = row.Cells[0].Value.ToString();
                     string productName = row.Cells[1].Value.ToString();
                     int qty = Convert.ToInt32(row.Cells[2].Value);
+                    string unit = row.Cells[3].Value.ToString(); // ✅ ADD THIS
                     decimal price = Convert.ToDecimal(row.Cells[4].Value);
                     decimal amount = Convert.ToDecimal(row.Cells[5].Value);
 
@@ -359,17 +360,21 @@ namespace Final_Project
 
                     int itemID = Convert.ToInt32(itemIdObj);
 
-                    // Insert into Sales table
                     SqlCommand saleCmd = new SqlCommand(
-                        "INSERT INTO Sales (ItemID, Quantity, UnitPrice, Amount, TransactionID) VALUES (@itemID, @qty, @price, @amount, @transID)", con);
+ @"INSERT INTO Sales (SKU, Quantity, Price, Unit, Amount, TransactionID)
+  VALUES (@sku, @qty, @price, @unit, @amount, @transID)", con);
 
-                    saleCmd.Parameters.AddWithValue("@itemID", itemID);
+                    saleCmd.Parameters.AddWithValue("@sku", sku);
                     saleCmd.Parameters.AddWithValue("@qty", qty);
                     saleCmd.Parameters.AddWithValue("@price", price);
+                    saleCmd.Parameters.AddWithValue("@unit", unit);
                     saleCmd.Parameters.AddWithValue("@amount", amount);
                     saleCmd.Parameters.AddWithValue("@transID", transactionID);
 
                     saleCmd.ExecuteNonQuery();
+
+
+
 
                     // Deduct stock
                     SqlCommand stockCmd = new SqlCommand(
